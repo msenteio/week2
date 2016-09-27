@@ -20,6 +20,7 @@ public class RepopulateScript : MonoBehaviour {
 			GameObject token = gameManager.gridArray[x, gameManager.gridHeight - 1];
 			if(token == null){
 				gameManager.AddTokenToPosInGrid(x, gameManager.gridHeight - 1, gameManager.grid);
+
 			}
 		}
 	}

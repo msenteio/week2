@@ -174,6 +174,7 @@ public class MoveTokensScript : MonoBehaviour
 
         token.transform.position = pos;
 
+
         if (lerpPercent == 1) //If the lerp percentage is complete
         {
             /*
@@ -181,6 +182,7 @@ public class MoveTokensScript : MonoBehaviour
             */
             gameManager.gridArray[endGridX, endGridY] = token; 
             gameManager.gridArray[startGridX, startGridY] = null;
+//			RepopulateScript.AddNewTokenstoRepopulateGrid (); 
         }
     }
 
@@ -189,33 +191,28 @@ public class MoveTokensScript : MonoBehaviour
     /// </summary>
     /// <returns>If tokens have been moved successfully.</returns>
     public virtual bool MoveTokensToFillEmptySpaces()
-    {
-        bool movedToken = false; //The variable we'll be using to confirm if a token was moved.
+	{
+		bool movedToken = false; //The variable we'll be using to confirm if a token was moved.
 
-        for (int x = 0; x < gameManager.gridWidth; x++) //For the length of the grid...
-        {
-            for (int y = 1; y < gameManager.gridHeight; y++) //...and for the height of the grid...
-            {
-                if (gameManager.gridArray[x, y - 1] == null) //If we find an empty space:
-                {
-                    for (int pos = y; pos < gameManager.gridHeight; pos++) //...using the y position as a reference...
-                    {
-                        GameObject token = gameManager.gridArray[x, pos]; //...grab a token on top of the empty space.
-                        if (token != null) //If the token that we've just selected is a valid token...
-                        {
-                            MoveTokenToEmptyPos(x, pos, x, pos - 1, token); //make it move downward.
-                            movedToken = true; //Tell the game that we've moved a token.
-                        }
-                    }
-                }
-            }
-        }
+		for (int x = 0; x < gameManager.gridWidth; x++) { //For the length of the grid...
+			for (int y = 1; y < gameManager.gridHeight; y++) { //...and for the height of the grid...
+				if (gameManager.gridArray [x, y - 1] == null && gameManager.gridArray[x, y] !=null) { //If we find an empty space:
+					for (int pos = y; pos < gameManager.gridHeight; pos++) { //...using the y position as a reference...
+						GameObject token = gameManager.gridArray [x, pos]; //...grab a token on top of the empty space.
+						if (token != null) { //If the token that we've just selected is a valid token...
+							MoveTokenToEmptyPos (x, pos, x, pos - 1, token); //make it move downward.
+							movedToken = true; //Tell the game that we've moved a token.
+						}
+					}
+				}
+			}
+		}
 
-        if (lerpPercent == 1) //If the lerp percent is 
-        {
-            move = false;
-        }
+		if (lerpPercent == 1) { //If the lerp percent is 
+			move = false;
+		}
 
-        return movedToken; //Tell the game if we moved the object or not.
+		return movedToken;
+		//return move; //Tell the game if 	we moved the object or not.
     }
 }

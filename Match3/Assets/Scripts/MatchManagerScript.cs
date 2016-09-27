@@ -9,12 +9,14 @@ public class MatchManagerScript : MonoBehaviour {
 	public AudioSource meow; 
 	private int score; 
 	public Text myscore; 
+	public Animator explode;
 
 	public virtual void Start () {
 		gameManager = GetComponent<GameManagerScript>();
 		meow = GetComponent<AudioSource> (); 
 		myscore = GetComponent<Text> (); 
 		score = 0; 
+		explode = GetComponent<Animator> (); 
 	}
 
 	/// <summary>
@@ -189,6 +191,7 @@ public class MatchManagerScript : MonoBehaviour {
 							numRemoved++;
 							meow.Play ();  
 							score++;
+							explode.Play("explode");
 						}
 					}
 				}
@@ -206,6 +209,7 @@ public class MatchManagerScript : MonoBehaviour {
 
 							meow.Play (); 
 							score++; 
+							explode.Play("explode");
 							//myscore.text = "Score: " + score;
 						}
 					}
