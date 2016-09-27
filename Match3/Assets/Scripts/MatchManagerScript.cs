@@ -9,14 +9,25 @@ public class MatchManagerScript : MonoBehaviour {
 	public AudioSource meow; 
 	private int score; 
 	public Text myscore; 
-	public Animator explode;
+	private Clearable clearableComponent; 
+	public Clearable ClearableComponent {
+		get { return clearableComponent; }
+	}
+	//public Animator explode;
+	//bool isBeingCleared = false; 
+
+	void awake(){
+	
+		clearableComponent = GetComponent<Clearable> (); 
+	
+	}
 
 	public virtual void Start () {
 		gameManager = GetComponent<GameManagerScript>();
 		meow = GetComponent<AudioSource> (); 
 		myscore = GetComponent<Text> (); 
 		score = 0; 
-		explode = GetComponent<Animator> (); 
+		//explode = GetComponent<Animator> (); 
 	}
 
 	/// <summary>
@@ -171,7 +182,9 @@ public class MatchManagerScript : MonoBehaviour {
 	/// </summary>
 	/// <returns>The number of tokens destroyed.</returns>
 	public virtual int RemoveMatches(){
+		
 		int numRemoved = 0;
+	
 
 		//iterate across entire grid, looking for matches
 		//wherever a horizontal match of three or more tokens is found, destroy them
@@ -189,9 +202,7 @@ public class MatchManagerScript : MonoBehaviour {
 
 							gameManager.gridArray [i, y] = null;
 							numRemoved++;
-							meow.Play ();  
-							score++;
-							explode.Play("explode");
+							isBeingCleared = true; 
 						}
 					}
 				}
@@ -206,10 +217,8 @@ public class MatchManagerScript : MonoBehaviour {
 
 							gameManager.gridArray [x, i] = null;
 							numRemoved++; 
+							isBeingCleared = true; 
 
-							meow.Play (); 
-							score++; 
-							explode.Play("explode");
 							//myscore.text = "Score: " + score;
 						}
 					}
