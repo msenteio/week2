@@ -8,8 +8,9 @@ public class MatchManagerScript : MonoBehaviour {
 												//but not to unrelated scripts
 	public AudioSource meow; 
 	public GameObject explode;
-	//private int score; 
-	//public Text myscore; 
+	public int scoreValue;
+	private int score = 10; 
+	public Text myscore; 
 //	private Clearable clearableComponent; 
 //	public Clearable ClearableComponent {
 //		get { return clearableComponent; }
@@ -26,9 +27,20 @@ public class MatchManagerScript : MonoBehaviour {
 	public virtual void Start () {
 		gameManager = GetComponent<GameManagerScript>();
 		meow = GetComponent<AudioSource> (); 
-//		myscore = GetComponent<Text> (); 
-//		score = 0; 
-		//explode = GetComponent<Animator> (); 
+		//myscore = GetComponent<Text> (); 
+		score = 0;
+		UpdateScore ();
+	}
+
+	public void AddScore (int newScoreValue)
+	{
+		score += newScoreValue;
+		UpdateScore ();
+	}
+
+	void UpdateScore ()
+	{
+		myscore.text = "" + score;
 	}
 
 	IEnumerator Wait() {
@@ -207,7 +219,9 @@ public class MatchManagerScript : MonoBehaviour {
 							Instantiate(explode, token.transform.position, Quaternion.identity);
 							StartCoroutine(Wait()); 
 							Destroy (token);
-
+							meow.Play (); 
+							score++;
+							AddScore (scoreValue);
 							gameManager.gridArray [i, y] = null;
 							numRemoved++;
 							//Instantiate(explode, token.transform.position, Quaternion.identity);
@@ -226,7 +240,9 @@ public class MatchManagerScript : MonoBehaviour {
 							Instantiate(explode, token.transform.position, Quaternion.identity);
 							StartCoroutine (Wait ()); 
 							Destroy (token);
-
+							meow.Play (); 
+							score++;
+							AddScore (scoreValue);
 							gameManager.gridArray [x, i] = null;
 							numRemoved++; 
 							//Instantiate(explode, token.transform.position, Quaternion.identity);
