@@ -31,6 +31,11 @@ public class MatchManagerScript : MonoBehaviour {
 		//explode = GetComponent<Animator> (); 
 	}
 
+	IEnumerator Wait() {
+		yield return new WaitForSeconds(2);
+	
+	}
+
 	/// <summary>
 	/// Checks the entire grid for matches.
 	/// </summary>
@@ -199,11 +204,13 @@ public class MatchManagerScript : MonoBehaviour {
 
 						for (int i = x; i < x + horizonMatchLength; i++) {
 							GameObject token = gameManager.gridArray [i, y]; 
+							Instantiate(explode, token.transform.position, Quaternion.identity);
+							StartCoroutine(Wait()); 
 							Destroy (token);
 
 							gameManager.gridArray [i, y] = null;
 							numRemoved++;
-							Instantiate(explode, token.transform.position, Quaternion.identity);
+							//Instantiate(explode, token.transform.position, Quaternion.identity);
 
 
 						}
@@ -216,11 +223,13 @@ public class MatchManagerScript : MonoBehaviour {
 					if (verticalMatchLength > 2) {
 						for (int i = y; i < y + verticalMatchLength; i++) {
 							GameObject token = gameManager.gridArray [x, i];
+							Instantiate(explode, token.transform.position, Quaternion.identity);
+							StartCoroutine (Wait ()); 
 							Destroy (token);
 
 							gameManager.gridArray [x, i] = null;
 							numRemoved++; 
-							Instantiate(explode, token.transform.position, Quaternion.identity);
+							//Instantiate(explode, token.transform.position, Quaternion.identity);
 
 
 							//myscore.text = "Score: " + score;
