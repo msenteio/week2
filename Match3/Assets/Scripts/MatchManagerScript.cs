@@ -7,26 +7,27 @@ public class MatchManagerScript : MonoBehaviour {
 	protected GameManagerScript gameManager;    //"protected" means this field is public to child scripts
 												//but not to unrelated scripts
 	public AudioSource meow; 
-	private int score; 
-	public Text myscore; 
-	private Clearable clearableComponent; 
-	public Clearable ClearableComponent {
-		get { return clearableComponent; }
-	}
+	public GameObject explode;
+	//private int score; 
+	//public Text myscore; 
+//	private Clearable clearableComponent; 
+//	public Clearable ClearableComponent {
+//		get { return clearableComponent; }
+//	}
 	//public Animator explode;
 	//bool isBeingCleared = false; 
 
 	void awake(){
 	
-		clearableComponent = GetComponent<Clearable> (); 
+		//clearableComponent = GetComponent<Clearable> (); 
 	
 	}
 
 	public virtual void Start () {
 		gameManager = GetComponent<GameManagerScript>();
 		meow = GetComponent<AudioSource> (); 
-		myscore = GetComponent<Text> (); 
-		score = 0; 
+//		myscore = GetComponent<Text> (); 
+//		score = 0; 
 		//explode = GetComponent<Animator> (); 
 	}
 
@@ -202,7 +203,9 @@ public class MatchManagerScript : MonoBehaviour {
 
 							gameManager.gridArray [i, y] = null;
 							numRemoved++;
-							isBeingCleared = true; 
+							Instantiate(explode, token.transform.position, Quaternion.identity);
+
+
 						}
 					}
 				}
@@ -217,7 +220,8 @@ public class MatchManagerScript : MonoBehaviour {
 
 							gameManager.gridArray [x, i] = null;
 							numRemoved++; 
-							isBeingCleared = true; 
+							Instantiate(explode, token.transform.position, Quaternion.identity);
+
 
 							//myscore.text = "Score: " + score;
 						}
